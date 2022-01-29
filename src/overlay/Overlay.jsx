@@ -61,9 +61,7 @@ const Overlay = (props) => {
         setEmail("");
         setOrderid("");
         setorderidError(false);
-        setHasOrder(false);
-        setEmailError(false)
-
+        setEmailError(false);
     }
 
     useEffect(() => {
