@@ -18,7 +18,6 @@ export const MapDisplay = () => {
       const [customerState, setCustomerState] = useState();
 
       const loadCustomer = async() => {
-        console.log(customer)
         if (customer.customer){
           let saved = await get(customer.customer.customerEmailAddress);
             if(saved === undefined){
@@ -29,6 +28,8 @@ export const MapDisplay = () => {
               await set(customer.customer.customerEmailAddress, saved)
             } 
             setCustomerState({...customer.customer, location: saved})
+        }else{
+          setCustomerState(undefined)
         }
       }
 

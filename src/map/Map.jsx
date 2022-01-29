@@ -3,7 +3,6 @@ import GoogleMapReact from 'google-map-react';
 import './Map.css';
 import { Room, Home, Close } from '@material-ui/icons';
 import React, { useState, useEffect } from 'react';
-import { set } from 'idb-keyval';
 
 const Map = ({ customer, storesLocation, initGeocoder }) => {
 

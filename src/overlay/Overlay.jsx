@@ -24,6 +24,7 @@ const Overlay = (props) => {
     const deleteOrder = () => {
         localStorage.clear();
         setHasOrder(false);
+        customer.setCustomer(undefined);
     }
 
     const validateInformation = async () => {
