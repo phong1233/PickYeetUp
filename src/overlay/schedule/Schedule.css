@@ -15,15 +15,15 @@
 
 .summaryBox {
     width: 90%;
-    padding: 20px;
+    padding: 30px 20px;
 }
 
 .orderSummary {
-    padding: 20px;
+    padding: 20px 20px;
 }
 
 .summaryText {
     display: flex;
     align-items: center !important;
-    justify-content: center !important;
+    justify-content: left !important;
 }

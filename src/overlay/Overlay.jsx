@@ -45,7 +45,6 @@ const Overlay = (props) => {
                 setorderidError(true);
                 return;
             }
-            console.log(res)
             localStorage.setItem("order", JSON.stringify(res));
             setorderidError(false);
             setHasOrder(true);
@@ -64,7 +63,7 @@ const Overlay = (props) => {
     useEffect(() => {
         let order = localStorage.getItem("order");
         setHasOrder(order);
-    })
+    }, [])
 
 
     return (

@@ -3,6 +3,7 @@ import { Button, Card, Grid, Typography, List, ListItem,ListItemIcon, ListItemTe
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import './Schedule.css';
+import Pickup from './pickup/Pickup'
 
 const Schedule = (props) => {
     const [ order, setOrder ] = useState();
@@ -29,7 +30,7 @@ const Schedule = (props) => {
             <Card className='scheduleOverlay'>
                 {order &&
                 <div className='summaryBox'>
-                    <Card style={{backgroundColor: "#9fedcf"}} className='orderSummary' raised={false} elevation={0}>
+                    <Card style={{backgroundColor: "#e8e5dc"}} className='orderSummary' raised={false} elevation={0}>
                         <Grid container spacing={1}>
                             <Grid className={'summaryText'} item xs={12}>
                                 <Typography variant="h6">
@@ -41,7 +42,7 @@ const Schedule = (props) => {
                                     Name:
                                 </Typography>
                             </Grid>
-                            <Grid className={'summaryText'} item xs={4}>
+                            <Grid className={'summaryText'} item xs={10}>
                                 <Typography variant="body1">
                                     {order.customerName}
                                 </Typography>
@@ -51,7 +52,7 @@ const Schedule = (props) => {
                                     Number:
                                 </Typography>
                             </Grid>
-                            <Grid className={'summaryText'} item xs={4}>
+                            <Grid className={'summaryText'} item xs={10}>
                                 <Typography variant="body1">
                                     {formatNumer(order.customerPhoneNumber)}
                                 </Typography>
@@ -70,7 +71,7 @@ const Schedule = (props) => {
                                 <List dense>
                                 {
                                     order.orderEntries.map((e) => (
-                                        <ListItem>
+                                        <ListItem key={e.productName}>
                                             <ListItemIcon>
                                                 <ShoppingCartIcon />
                                             </ListItemIcon>
@@ -85,7 +86,9 @@ const Schedule = (props) => {
                             </Grid>
                         </Grid>
                     </Card>
+                    <Pickup />
                 </div>}
+
             </Card>
             <Button className="backButton" startIcon={<ArrowBackIosIcon />} onClick={props.deleteOrder}>
                 Schedule another pickup
