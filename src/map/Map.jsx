@@ -65,8 +65,34 @@ const Marker = ({color, type, store, selected, select}) => {
         {type === "home" ? <Home className="Marker" style={{fill: color}} fontSize="large"/> : <Room className="Marker" style={{fill: selected ? 'green': color}} fontSize="large"/>}
         
         </div>
-        {show && type === "store" ? <InfoWindow store={store} /> : <></>}
+        {show && (type === "store" ? <InfoWindow store={store} /> : <InfoWindowHome />)}
         </>
+    );
+  };
+
+  const InfoWindowHome = () => {
+    const infoWindowStyle = {
+      position: 'relative',
+      bottom: 75,
+      left: '-75px',
+      width: 170,
+      backgroundColor: 'white',
+      boxShadow: '0 2px 7px 1px rgba(0, 0, 0, 0.3)',
+      padding: 10,
+      fontSize: 12,
+      zIndex: 100,
+      color:'black',
+      borderRadius: "20px",
+      cursor: "default"
+    };
+
+
+    return (
+      <div style={infoWindowStyle}>
+        <div style={{ fontSize: 14 }}>
+          Home sweet home!
+        </div> 
+      </div>
     );
   };
 
