@@ -38,32 +38,32 @@ const Schedule = (props) => {
                                 </Typography>
                             </Grid>
                             <Grid className={'summaryText'} item xs={2}>
-                                <Typography variant="h6">
+                                <Typography variant="body1">
                                     Name:
                                 </Typography>
                             </Grid>
                             <Grid className={'summaryText'} item xs={10}>
-                                <Typography variant="body1">
+                                <Typography variant="body2">
                                     {order.customerName}
                                 </Typography>
                             </Grid>
                             <Grid className={'summaryText'} item xs={2}>
-                                <Typography variant="h6">
+                                <Typography variant="body1">
                                     Number:
                                 </Typography>
                             </Grid>
                             <Grid className={'summaryText'} item xs={10}>
-                                <Typography variant="body1">
+                                <Typography variant="body2">
                                     {formatNumer(order.customerPhoneNumber)}
                                 </Typography>
                             </Grid>
                             <Grid className={'summaryText'} item xs={2}>
-                                <Typography variant="h6">
+                                <Typography variant="body1">
                                     Address:
                                 </Typography>
                             </Grid>
                             <Grid className={'summaryText'} item xs={10}>
-                                <Typography variant="body1">
+                                <Typography variant="body2">
                                     {order.customerAddress}
                                 </Typography>
                             </Grid>
