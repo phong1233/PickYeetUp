@@ -1,7 +1,27 @@
-# Getting Started with Create React App
+Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## About The project
+**Project Name** is a BOPIP (Build Online, Pickup in Parking Lot) web app which is targeted towards an eCommerce company to help them safely manage customer orders during the COVID-19 pandemic
+
+## Demo
+* Visit our website: [placeholder-domain.com]()
+
+### Built With
+* Frontend Framework [React](https://reactjs.org/tutorial/tutorial.html)
+* Geocoding [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview)
+* Library [Material UI](https://mui.com/)
+
+### Getting Started
+## Installation
+1. Clone the repositery
+```
+https://github.com/phong1233/conuhacks2022.git
+```
+2. 
+```
+npm install
+```
 ## Available Scripts
 
 In the project directory, you can run:
@@ -39,7 +59,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## More Information
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
@@ -68,3 +88,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Contributors 
+
+| Name  | Github |
+| ------------- | ------------- |
+| Sébastien Blain-Nadeau  | [sebastien-blain](https://github.com/sebastien-blain)  |
+| Phong Le  | [phong1233](https://github.com/phong1233)  |
+| Kevin Jiang | [kevjiang64](https://github.com/kevjiang64) |
