@@ -2,4 +2,12 @@
     height: 100vh;
     width: 100%;
   }
+
+.Marker {
+  cursor: pointer;
+  z-index: 10;
+}
   
+td {
+  text-align: left;
+}
