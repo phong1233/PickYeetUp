@@ -1,12 +1,12 @@
 
 import GoogleMapReact from 'google-map-react';
 import './Map.css';
-import { Room } from '@material-ui/icons';
+import { Room, Home } from '@material-ui/icons';
 
 const Map = ({ customer, storesLocation, initGeocoder }) => {
 
     const defaultLocation = {
-        address: customer?.customerAddress || "default address",
+        address: "default address",
         lat: 45.5076627,
         lng: -73.7251843
       };
@@ -19,22 +19,28 @@ const Map = ({ customer, storesLocation, initGeocoder }) => {
                 }}
                 defaultCenter={defaultLocation}
                 defaultZoom={12}
-                options={{ disableDefaultUI: true, gestureHandling: "cooperative", zoomControl: false }}
+                options={{ 
+                    clickableIcons: false,
+                    disableDefaultUI: true, 
+                    gestureHandling: "cooperative", 
+                    zoomControl: false, 
+                    disableDoubleClickZoom: true
+                    }}
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={initGeocoder}
                 >
-                {customer && <Marker color={"green"} lat={customer.location.lat} lng={customer.location.lng} />}
+                {customer && <Marker type={"home"} color={"#000369"} lat={customer.location.lat} lng={customer.location.lng} />}
                 {storesLocation && storesLocation.map(s => {
-                    return (<Marker color={"red"} key={s.storeId} lat={s.location.lat} lng={s.location.lng} />)
+                    return (<Marker type={"store"} color={"#a11606"} key={s.storeId} lat={s.location.lat} lng={s.location.lng} />)
                 })}
             </GoogleMapReact>
         </div>
     )
 }
 
-const Marker = ({color}) => {
+const Marker = ({color, type}) => {
     return (
-        <Room style={{fill: color}} fontSize="large"/>
+        type === "home" ? <Home style={{fill: color}} fontSize="medium"/> : <Room style={{fill: color}} fontSize="medium"/>
     );
   };
 
