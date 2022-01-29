@@ -7,8 +7,8 @@ const Map = ({ customer, storesLocation, initGeocoder }) => {
 
     const defaultLocation = {
         address: customer?.customerAddress || "default address",
-        lat: 45.507220,
-        lng: -73.768610
+        lat: 45.5076627,
+        lng: -73.7251843
       };
 
     return(
