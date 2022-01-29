@@ -3,6 +3,7 @@ import { Card, TextField, Button } from '@material-ui/core';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import Schedule from './schedule/Schedule';
 import './Overlay.css';
+import { useCustomer } from '../contexts/CustomerContext';
 
 const Overlay = (props) => {
     const [ hasOrder, setHasOrder] = useState(false);
@@ -10,6 +11,8 @@ const Overlay = (props) => {
     const [ orderid, setOrderid] = useState("");
     const [ emailError, setEmailError ] = useState(false);
     const [ orderidError, setorderidError ] = useState(false);
+
+    const customer = useCustomer();
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -24,6 +27,7 @@ const Overlay = (props) => {
     }
 
     const validateInformation = async () => {
+        let customerInfo = undefined;
         try {
             let res = await fetch(`https://sapstore.conuhacks.io/orders/byEmail?email=${email}`);
             res = await res.json();
@@ -45,10 +49,15 @@ const Overlay = (props) => {
             localStorage.setItem("order", JSON.stringify(res));
             setorderidError(false);
             setHasOrder(true);
+            customerInfo = res;
         }
         catch {
             setorderidError(true);
             return;
+        }
+
+        if(customerInfo){
+            customer.setCustomer(customerInfo);
         }
     }
 
