@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, TextField, Button } from '@material-ui/core';
+import { Card, TextField, Button, Typography } from '@material-ui/core';
 import Schedule from './schedule/Schedule';
 import './Overlay.css';
 import { useCustomer } from '../contexts/CustomerContext';
