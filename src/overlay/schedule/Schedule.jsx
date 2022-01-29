@@ -6,7 +6,7 @@ import './Schedule.css';
 const Schedule = (props) => {
 
     return (
-        <div className='scheduleContainer'>
+        <>
             <Card className='scheduleOverlay'>
                 <Card className='orderSummary'>
                     Order Summary
@@ -15,7 +15,7 @@ const Schedule = (props) => {
             <Button className="backButton" startIcon={<ArrowBackIosIcon />} onClick={props.deleteOrder}>
                 Schedule another pickup
             </Button>
-        </div>
+        </>
     );
 }
 

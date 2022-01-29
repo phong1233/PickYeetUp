@@ -15,7 +15,7 @@ const Map = ({ customer, storesLocation, initGeocoder }) => {
         <div className="Map">
             <GoogleMapReact
                 bootstrapURLKeys={{
-                    key: process.env.REACT_MAPS_API || "",
+                    key: process.env.REACT_APP_MAPS_API || "",
                 }}
                 defaultCenter={defaultLocation}
                 defaultZoom={12}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, TextField, Button } from '@material-ui/core';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import Schedule from './schedule/Schedule';
 import './Overlay.css';
@@ -61,7 +62,7 @@ const Overlay = (props) => {
     return (
         <div className='container'>
         {
-            hasOrder ? <Schedule deleteOrder={deleteOrder} /> :
+            hasOrder ? <Schedule deleteOrder={deleteOrder} />:
             <Card className='overlay'>
                 <LocalShippingIcon fontSize='large' />
                 <TextField
