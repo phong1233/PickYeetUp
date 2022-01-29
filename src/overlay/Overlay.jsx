@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Card, TextField, Button } from '@material-ui/core';
-import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import Schedule from './schedule/Schedule';
 import './Overlay.css';
 import { useCustomer } from '../contexts/CustomerContext';
+import pickmeup from '../logo/pickmeup.png';
 
 const Overlay = (props) => {
     const [ hasOrder, setHasOrder] = useState(false);
@@ -58,6 +58,12 @@ const Overlay = (props) => {
         if(customerInfo){
             customer.setCustomer(customerInfo);
         }
+        setEmail("");
+        setOrderid("");
+        setorderidError(false);
+        setHasOrder(false);
+        setEmailError(false)
+
     }
 
     useEffect(() => {
@@ -71,26 +77,29 @@ const Overlay = (props) => {
         {
             hasOrder ? <Schedule deleteOrder={deleteOrder} />:
             <Card className='overlay'>
-                <LocalShippingIcon fontSize='large' />
-                <TextField
+                <img src={pickmeup} alt="Logo" width='150' height='150'/>
+                <Typography variant='body1'>Schedule your pickup order. Satisfaction guaranteed.</Typography>
+                <TextField  
                     required
                     id="email-field"
-                    label="Email"
+                    label="Email Address"
                     defaultValue=""
                     variant="outlined"
                     fullWidth
                     onChange={handleEmailChange}
-                    error={emailError}
+                    error={emailError}  
+                    helperText={emailError ? "Please provide a valid email address." : ""}
                 />
                 <TextField
                     required
                     id="orderid-field"
-                    label="Order id"
+                    label="Order ID"
                     defaultValue=""
                     variant="outlined"
                     fullWidth
                     onChange={handleOrderidChange}
                     error={orderidError}
+                    helperText={orderidError ? "Please provide a valid order ID." : ""}
                 />
                 <Button variant="contained" color="primary" onClick={validateInformation}>
                     Schedule Pickup
