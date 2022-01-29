@@ -1,4 +1,5 @@
 import './App.css';
+import MapDisplay from './map/MapDisplay';
 import Overlay from './overlay/Overlay';
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <div className="App">
       <div className='App-header'>
         <Overlay />
+        <MapDisplay />
       </div>
     </div>
   );
