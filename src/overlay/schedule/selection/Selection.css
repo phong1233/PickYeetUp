@@ -1,0 +1,29 @@
+.backButton {
+    position: absolute !important;
+    bottom: 0px !important;
+    left: 40px !important;
+}
+
+.selectionOverlay {
+    height: 100%;
+    display: flex;
+    gap: 70px;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.summaryBox {
+    width: 90%;
+    padding: 30px 20px;
+}
+
+.orderSummary {
+    padding: 20px 20px;
+}
+
+.summaryText {
+    display: flex;
+    align-items: center !important;
+    justify-content: left !important;
+}

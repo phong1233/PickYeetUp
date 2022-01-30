@@ -4,9 +4,11 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import './Schedule.css';
 import Pickup from './pickup/Pickup'
+import Selection from './selection/Selection';
 
 const Schedule = (props) => {
     const [ order, setOrder ] = useState();
+    const [ date, setDate ] = useState();
 
     const formatNumer = (str) => {
         let cleaned = ('' + str).replace(/\D/g, '');
@@ -26,7 +28,7 @@ const Schedule = (props) => {
     }, [])
 
     return (
-        <>
+        <>{date ? <Selection />: 
             <Card className='scheduleOverlay'>
                 {order &&
                 <div className='summaryBox'>
@@ -67,7 +69,7 @@ const Schedule = (props) => {
                                     {order.customerAddress}
                                 </Typography>
                             </Grid>
-                            <Grid item sx={12}>
+                            <Grid item xs={12}>
                                 <List dense>
                                 {
                                     order.orderEntries.map((e) => (
@@ -79,17 +81,38 @@ const Schedule = (props) => {
                                                 primary={e.productName}
                                                 secondary={`Quantity: ${e.quantity}`}
                                             /> 
+                                            <ListItemText
+                                                style={{textAlign: "right", verticalAlign: "top", marginLeft: "auto", paddingLeft: "15px"}}
+                                                primary={`$${e.totalEntryPrice}`}
+
+                                            /> 
                                         </ListItem>
                                     ))
                                 }
                                 </List>
                             </Grid>
+                            <Grid className={'summaryText'} item xs={2}>
+                                <Typography variant="body1">
+                                    <b>Total:</b>
+                                </Typography>
+                            </Grid>
+                            <Grid className={'summaryText'} item xs={10}>
+                                <Typography variant="body2"  style={{marginLeft: "auto"}}>
+                                    <b>${order.orderEntries.map(e => e.totalEntryPrice).reduce((prev, next) => prev+next)}</b>
+                                </Typography>
+                            </Grid>
                         </Grid>
                     </Card>
+                    <Typography variant="h6" style={{paddingTop: "25px"}}>
+                    Choose the date at which you would like to pickup your order
+                                </Typography>
                     <Pickup />
+                    <Button variant="contained" color="primary" onClick={setDate("sd")}>
+                Next
+            </Button>
                 </div>}
-
-            </Card>
+            </Card>}
+            
             <Button className="backButton" startIcon={<ArrowBackIosIcon />} onClick={props.deleteOrder}>
                 Schedule another pickup
             </Button>

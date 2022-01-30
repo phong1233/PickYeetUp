@@ -59,6 +59,7 @@ export const MapDisplay = () => {
         }
   
         setStores(response)
+        customer.setStores(response)
       }
       
     return (
