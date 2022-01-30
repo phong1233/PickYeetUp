@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Grid, Typography, List, ListItem,ListItemIcon, ListItemText } from '@material-ui/core';
+import { Card, Grid, Typography, List, ListItem,ListItemIcon, ListItemText, TextField } from '@material-ui/core';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import './Schedule.css';
 import { Button } from '@material-ui/core';
@@ -9,6 +9,24 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 const Schedule = (props) => {
     const [ order, setOrder ] = useState();
     const [ pickingDate, setPickingDate ] = useState();
+    const [ data, setDate ] = useState(new Date().toISOString().split('T')[0]);
+    const [ dateError, setDateError ] = useState("");
+
+    const handleDateChange = (e) => {
+        let newDate = e.target.value.split("-")
+        let chosenDate = new Date(newDate[0], parseInt(newDate[1])-1, newDate[2])
+        let today = new Date();
+        today.setHours(0,0,0,0)
+        let end = new Date();
+        end.setDate(end.getDate() + 14);
+
+        if(chosenDate < today || chosenDate > end) {
+            setDateError(`Must be between today and ${end.toISOString().split('T')[0]}`)
+            return
+        }
+        setDateError("")
+        setDate(e.target.value);
+    }
 
     const setPickingToFalse = () => {
         setPickingDate(false);
@@ -112,7 +130,24 @@ const Schedule = (props) => {
                             <Typography variant="h6" style={{paddingTop: "25px"}}>
                             Choose the date at which you would like to pickup your order
                             </Typography>
-                            <Button color="primary" variant="outlined" onClick={() => setPickingDate(!pickingDate)}>Choose Pickup Date</Button>
+                            <br/>
+                            <br/>
+                            <TextField
+                                id="date"
+                                variant="outlined"
+                                type="date"
+                                error={dateError ? true : false}
+                                helperText={dateError}
+                                defaultValue={data}
+                                onChange={handleDateChange}
+                                sx={{ width: 220 }}
+                                    InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                            <br/>
+                            <br/>
+                            <Button color="primary" variant="contained" onClick={() => setPickingDate(!pickingDate)}>Choose Pickup Time</Button>
                         </div>}
                     </Card>
                     
