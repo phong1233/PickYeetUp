@@ -124,8 +124,8 @@ const Marker = ({color, type, store, selected, select}) => {
     let s = h.Start;
     let f = h.Finish;
 
-    s = `${s[0] == '0' ? "": s[0]}${s[1]}:${s[2]}${s[3]}`
-    f = `${f[0] == '0' ? "": f[0]}${f[1]}:${f[2]}${f[3]}`
+    s = `${s[0] === '0' ? "": s[0]}${s[1]}:${s[2]}${s[3]}`
+    f = `${f[0] === '0' ? "": f[0]}${f[1]}:${f[2]}${f[3]}`
     return `${s} - ${f}`
   }
 

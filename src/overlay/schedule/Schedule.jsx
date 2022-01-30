@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Grid, Typography, List, ListItem,ListItemIcon, ListItemText } from '@material-ui/core';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { Card, Grid, Typography, List, ListItem,ListItemIcon, ListItemText } from '@material-ui/core';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import './Schedule.css';
-import Pickup from './pickup/Pickup'
+import { Button } from '@material-ui/core';
+import Pickup from './pickup/Pickup';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 const Schedule = (props) => {
     const [ order, setOrder ] = useState();
-    const [ pickupDateTime, setPickupDateTime] = useState();
     const [ pickingDate, setPickingDate ] = useState();
 
     const setPickingToFalse = () => {

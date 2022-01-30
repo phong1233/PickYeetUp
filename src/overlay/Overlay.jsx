@@ -3,7 +3,7 @@ import { Card, TextField, Button, Typography } from '@material-ui/core';
 import Schedule from './schedule/Schedule';
 import './Overlay.css';
 import { useCustomer } from '../contexts/CustomerContext';
-import pickmeup from '../logo/pickmeup.png';
+import pickyeetup from '../logo/pickyeetup.png';
 
 
 const Overlay = (props) => {
@@ -77,7 +77,7 @@ const Overlay = (props) => {
         {
             hasOrder ? <Schedule deleteOrder={deleteOrder} />:
             <Card className='overlay'>
-                <img src={pickmeup} alt="Logo" width='250' height='250'/>
+                <img src={pickyeetup} alt="Logo" width='250' height='250'/>
                 <Typography variant='body1'>Schedule your pickup order. Satisfaction guaranteed.</Typography>
                 <br/>
                 <TextField  
