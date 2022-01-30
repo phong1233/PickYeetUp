@@ -1,4 +1,14 @@
-.pickupContainer {
-    width: 90%;
-    padding: 50px 20px;
+.scheduleCanvas {
+    width: 80%;
+    outline: black 2px solid;
+    border-radius: 3px;
+}
+
+.pickupOverlay {
+    height: 100%;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px;
 }

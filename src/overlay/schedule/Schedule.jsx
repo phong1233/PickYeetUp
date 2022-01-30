@@ -7,6 +7,12 @@ import Pickup from './pickup/Pickup'
 
 const Schedule = (props) => {
     const [ order, setOrder ] = useState();
+    const [ pickupDateTime, setPickupDateTime] = useState();
+    const [ pickingDate, setPickingDate ] = useState();
+
+    const setPickingToFalse = () => {
+        setPickingDate(false);
+    }
 
     const formatNumer = (str) => {
         let cleaned = ('' + str).replace(/\D/g, '');
@@ -27,90 +33,94 @@ const Schedule = (props) => {
 
     return (
         <>
-            <Card className='scheduleOverlay'>
-                {order &&
-                <div className='summaryBox'>
-                    <Card style={{backgroundColor: "#e8e5dc"}} className='orderSummary' raised={false} elevation={0}>
-                        <Grid container spacing={1}>
-                            <Grid className={'summaryText'} item xs={12}>
-                                <Typography variant="h6">
-                                    Order Summary
-                                </Typography>
-                            </Grid>
-                            <Grid className={'summaryText'} item xs={2}>
-                                <Typography variant="body1">
-                                    Name:
-                                </Typography>
-                            </Grid>
-                            <Grid className={'summaryText'} item xs={10}>
-                                <Typography variant="body2">
-                                    {order.customerName}
-                                </Typography>
-                            </Grid>
-                            <Grid className={'summaryText'} item xs={2}>
-                                <Typography variant="body1">
-                                    Number:
-                                </Typography>
-                            </Grid>
-                            <Grid className={'summaryText'} item xs={10}>
-                                <Typography variant="body2">
-                                    {formatNumer(order.customerPhoneNumber)}
-                                </Typography>
-                            </Grid>
-                            <Grid className={'summaryText'} item xs={2}>
-                                <Typography variant="body1">
-                                    Address:
-                                </Typography>
-                            </Grid>
-                            <Grid className={'summaryText'} item xs={10}>
-                                <Typography variant="body2">
-                                    {order.customerAddress}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <List dense>
-                                {
-                                    order.orderEntries.map((e) => (
-                                        <ListItem key={e.productName}>
-                                            <ListItemIcon>
-                                                <ShoppingCartIcon />
-                                            </ListItemIcon>
-                                            <ListItemText
-                                                primary={e.productName}
-                                                secondary={`Quantity: ${e.quantity}`}
-                                            /> 
-                                            <ListItemText
-                                                style={{textAlign: "right", verticalAlign: "top", marginLeft: "auto", paddingLeft: "15px"}}
-                                                primary={`$${e.totalEntryPrice}`}
+            { pickingDate ? <Pickup prepTime={order.preparationTime} pickingFalse={setPickingToFalse} /> :
+                <>
+                    <Card className='scheduleOverlay'>
+                        {order &&
+                        <div className='summaryBox'>
+                            <Card style={{backgroundColor: "#e8e5dc"}} className='orderSummary' raised={false} elevation={0}>
+                                <Grid container spacing={1}>
+                                    <Grid className={'summaryText'} item xs={12}>
+                                        <Typography variant="h6">
+                                            Order Summary
+                                        </Typography>
+                                    </Grid>
+                                    <Grid className={'summaryText'} item xs={2}>
+                                        <Typography variant="body1">
+                                            Name:
+                                        </Typography>
+                                    </Grid>
+                                    <Grid className={'summaryText'} item xs={10}>
+                                        <Typography variant="body2">
+                                            {order.customerName}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid className={'summaryText'} item xs={2}>
+                                        <Typography variant="body1">
+                                            Number:
+                                        </Typography>
+                                    </Grid>
+                                    <Grid className={'summaryText'} item xs={10}>
+                                        <Typography variant="body2">
+                                            {formatNumer(order.customerPhoneNumber)}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid className={'summaryText'} item xs={2}>
+                                        <Typography variant="body1">
+                                            Address:
+                                        </Typography>
+                                    </Grid>
+                                    <Grid className={'summaryText'} item xs={10}>
+                                        <Typography variant="body2">
+                                            {order.customerAddress}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <List dense>
+                                        {
+                                            order.orderEntries.map((e) => (
+                                                <ListItem key={e.productName}>
+                                                    <ListItemIcon>
+                                                        <ShoppingCartIcon />
+                                                    </ListItemIcon>
+                                                    <ListItemText
+                                                        primary={e.productName}
+                                                        secondary={`Quantity: ${e.quantity}`}
+                                                    /> 
+                                                    <ListItemText
+                                                        style={{textAlign: "right", verticalAlign: "top", marginLeft: "auto", paddingLeft: "15px"}}
+                                                        primary={`$${e.totalEntryPrice}`}
 
-                                            /> 
-                                        </ListItem>
-                                    ))
-                                }
-                                </List>
-                            </Grid>
-                            <Grid className={'summaryText'} item xs={2}>
-                                <Typography variant="body1">
-                                    <b>Total:</b>
-                                </Typography>
-                            </Grid>
-                            <Grid className={'summaryText'} item xs={10}>
-                                <Typography variant="body2"  style={{marginLeft: "auto"}}>
-                                    <b>${order.orderEntries.map(e => e.totalEntryPrice).reduce((prev, next) => prev+next)}</b>
-                                </Typography>
-                            </Grid>
-                        </Grid>
+                                                    /> 
+                                                </ListItem>
+                                            ))
+                                        }
+                                        </List>
+                                    </Grid>
+                                    <Grid className={'summaryText'} item xs={2}>
+                                        <Typography variant="body1">
+                                            <b>Total:</b>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid className={'summaryText'} item xs={10}>
+                                        <Typography variant="body2"  style={{marginLeft: "auto"}}>
+                                            <b>${order.orderEntries.map(e => e.totalEntryPrice).reduce((prev, next) => prev+next)}</b>
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                            </Card>
+                            <Typography variant="h6" style={{paddingTop: "25px"}}>
+                            Choose the date at which you would like to pickup your order
+                            </Typography>
+                            <Button color="primary" variant="outlined" onClick={() => setPickingDate(!pickingDate)}>Choose Pickup Date</Button>
+                        </div>}
                     </Card>
-                    <Typography variant="h6" style={{paddingTop: "25px"}}>
-                    Choose the date at which you would like to pickup your order
-                    </Typography>
-                    <Pickup />
-                </div>}
-            </Card>
-            
-            <Button className="backButton" startIcon={<ArrowBackIosIcon />} onClick={props.deleteOrder}>
-                Schedule another pickup
-            </Button>
+                    
+                    <Button className="backButton" startIcon={<ArrowBackIosIcon />} onClick={props.deleteOrder}>
+                        Schedule another pickup
+                    </Button>
+                </>
+            }
         </>
     );
 }
