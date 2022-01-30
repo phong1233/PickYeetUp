@@ -60,7 +60,6 @@ export const getDisponibilities = async (storeId, date, storeStart, storeEnd, em
     }
     const startI = mapHoursToI(parseInt(storeStart.hour), parseInt(storeStart.minute));
     const endI = mapHoursToI(parseInt(storeEnd.hour), parseInt(storeEnd.minute));
-
     // Create 5min table with information
 
     let table = []
@@ -68,7 +67,7 @@ export const getDisponibilities = async (storeId, date, storeStart, storeEnd, em
     for(let i = 0; i< 146; i++){
         // Check that this i is in hours
 
-        if(i < startI -1 || i > endI + 1){
+        if(i < startI - 1 || i > endI + 1){
             table.push(0);
             continue;
         }

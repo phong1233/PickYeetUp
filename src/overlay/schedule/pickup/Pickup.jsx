@@ -1,21 +1,56 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {Card, Button, Grid, Typography, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
 import './Pickup.css'
+import {getDisponibilities, saveSchedule} from '../../../api/handleOrder'
+import { useCustomer } from '../../../contexts/CustomerContext';
 
-const temp = [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
 const Pickup = (props) => {
-    const [value, setValue] = useState(new Date().toISOString().split('T')[0]);
     const [currentPos, setCurrentPos] = useState(0);
     const [validPos, setValidPos] = useState(false);
     const [currentSelection, setCurrentSelection] = useState("");
+    const [dispo, setDispo] = useState([]);
     const canvasRef = useRef(null);
+    const [stores, setStores] = useState([])
+    const [sel, setSel] = useState("")
+    const customer = useCustomer();
+
+    function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2-lat1);  // deg2rad below
+        var dLon = deg2rad(lon2-lon1); 
+        var a = 
+          Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+          Math.sin(dLon/2) * Math.sin(dLon/2)
+          ; 
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        var d = R * c; // Distance in km
+        return d;
+      }
+      
+      function deg2rad(deg) {
+        return deg * (Math.PI/180)
+      }
+
+    const orderStores = () => {
+        const currentStores = customer.stores;
+        const user = customer.customer
+        let s = []
+        currentStores.map((c) => s.push({...c, distance: getDistanceFromLatLonInKm(c.location.lat, c.location.lng, user.location.lat, user.location.lng)}))
+
+        s.sort((a, b) => a.distance <= b.distance ? -1: 1)
+        console.log(s)
+
+        setStores(s)
+        selectS(s[0].storeId, s[0])
+    }
 
     const clearRectangle = () => {
         const canvas = canvasRef.current
         const context = canvas.getContext('2d')
         context.clearRect(0, 0, canvas.width, canvas.height);
-        drawCalendar(temp);
+        drawCalendar(dispo);
     }
 
     const drawCurrentSelection = (newPosition) => {
@@ -28,7 +63,7 @@ const Pickup = (props) => {
         let end = (newPosition + props.prepTime/5)
         let valid = true;
         for(let i=start; i < end; i++) {
-            if(!temp[i]) {
+            if(!dispo[i]) {
                 valid = false;
                 break;
             }
@@ -106,9 +141,14 @@ const Pickup = (props) => {
     }
 
     useEffect(() => {
-        drawCalendar(temp);
-        drawCurrentSelection(currentPos);
+        orderStores();
       }, [])
+
+    useEffect(() => {
+        drawCalendar(dispo);
+        drawCurrentSelection(currentPos);
+
+    }, [dispo])
     
     const handleNavigation = (e) => {
         if (e.deltaY < 0 && currentPos > 0) {
@@ -126,6 +166,30 @@ const Pickup = (props) => {
         }
     }
 
+    const valFromString = (str) => {
+        const hour = str.slice(0, 2)
+        const minute =str.slice(2)
+        return {hour, minute}
+
+    }
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    const selectS = (val, store) => {
+        setSel(val);
+        const opening = JSON.parse(store.openingHours)
+        const day = opening[(props.date.getDay() + 6) % 7]
+        const start = day[days[(props.date.getDay() + 6) % 7]]["Start"]
+        const end = day[days[(props.date.getDay() + 6) % 7]]["Finish"]
+        const di = getDisponibilities(store.storeId, `${props.date.getYear()}-${props.date.getMonth()}-${props.date.getDay()}`, valFromString(start), valFromString(end), store.employees, store.pickupLocations, customer.customer.parcelSize)
+        setDispo(di)
+    }
+
+    const confirmTime = () => {
+        const start = currentPos;
+        const end = (start + props.prepTime/5) + 2
+        const s = stores.filter(s => s.storeId == sel)[0]
+        const send = saveSchedule(s.storeId, `${props.date.getYear()}-${props.date.getMonth()}-${props.date.getDay()}`, customer.customer.orderId, start, end, s.employees, s.pickupLocations, customer.customer.parcelSize)
+    }
+
     return (
         <Card className='pickupOverlay'>
             <br></br>
@@ -133,24 +197,26 @@ const Pickup = (props) => {
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={1}
                     inputProps={{ 'aria-label': 'Without label' }}
                     variant="outlined"
-                    displayEmpty
-                >
-                    <MenuItem value={1}>Store #1 - 50km</MenuItem>
-                    <MenuItem value={2}>Store #2 - 50km</MenuItem>
-                    <MenuItem value={3}>Store #3 - 50km</MenuItem>
+                    value={sel}
+                    onChange={(e)=> selectS(e.target.value)}
+                >{
+                    stores.length !== 0 && (stores.map(s => {
+return(<MenuItem key={s.storeId} value={s.storeId}>{`${s.name} --- ${s.distance.toFixed(2)}km`}</MenuItem>)
+                    }))
+                    
+                }
                 </Select>
             </FormControl>
             <canvas className='scheduleCanvas' onClick={(e) => handleClick(e)} onWheel={(e) => handleNavigation(e)} ref={canvasRef}/>
             <Typography>{`Current selection: ${currentSelection}`}</Typography>
             <Grid container spacing={1}>
                 <Grid item xs={6}>
-                    <Button variant="contained" color="primary">Choose</Button>
+                    <Button variant="contained" color="secondary" onClick={props.pickingFalse}>Cancel</Button>
                 </Grid>
                 <Grid item xs={6}>
-                    <Button variant="contained" color="secondary" onClick={props.pickingFalse}>Cancel</Button>
+                    <Button variant="contained" color="primary" onClick={confirmTime} disabled={!validPos}>Choose</Button>
                 </Grid>
             </Grid>
         </Card>

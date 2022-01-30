@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Grid, Typography, List, ListItem,ListItemIcon, ListItemText, TextField } from '@material-ui/core';
+import { Card, Grid, Typography, List, ListItem,ListItemIcon, ListItemText } from '@material-ui/core';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import './Schedule.css';
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import Pickup from './pickup/Pickup';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+
+
 
 const Schedule = (props) => {
     const [ order, setOrder ] = useState();
@@ -44,6 +46,11 @@ const Schedule = (props) => {
         return null
     }
 
+    const selectDate = () => {
+        setPickingDate(true);
+
+    }
+
     useEffect(() => {
         let storedOrder = localStorage.getItem("order");
         setOrder(JSON.parse(storedOrder));
@@ -51,7 +58,7 @@ const Schedule = (props) => {
 
     return (
         <>
-            { pickingDate ? <Pickup prepTime={order.preparationTime} pickingFalse={setPickingToFalse} /> :
+            { pickingDate ? <Pickup prepTime={order.preparationTime} pickingFalse={setPickingToFalse} date={new Date(data)} /> :
                 <>
                     <Card className='scheduleOverlay'>
                         {order &&

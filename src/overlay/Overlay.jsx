@@ -4,6 +4,7 @@ import Schedule from './schedule/Schedule';
 import './Overlay.css';
 import { useCustomer } from '../contexts/CustomerContext';
 import pickyeetup from '../logo/pickyeetup.png';
+import { useOther } from '../contexts/OtherContext';
 
 
 const Overlay = (props) => {
@@ -14,6 +15,7 @@ const Overlay = (props) => {
     const [ orderidError, setorderidError ] = useState(false);
 
     const customer = useCustomer();
+    const other = useOther();
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -26,6 +28,7 @@ const Overlay = (props) => {
         localStorage.clear();
         setHasOrder(false);
         customer.setCustomer(undefined);
+        other.setCustomer(undefined);
     }
 
     const validateInformation = async () => {
@@ -58,7 +61,7 @@ const Overlay = (props) => {
         }
 
         if(customerInfo){
-            customer.setCustomer(customerInfo);
+            other.setCustomer(customerInfo);
         }
         setEmail("");
         setOrderid("");
@@ -68,6 +71,8 @@ const Overlay = (props) => {
 
     useEffect(() => {
         let order = localStorage.getItem("order");
+        let user = localStorage.getItem("customer");
+        other.setCustomer(user)
         setHasOrder(order);
     }, [])
 

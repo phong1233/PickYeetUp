@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { get, set } from 'idb-keyval';
 import Map from './Map';
 import { useCustomer } from '../contexts/CustomerContext';
+import { useOther } from '../contexts/OtherContext';
 
 export const MapDisplay = () => {
 
   const customer = useCustomer();
+  const other = useOther();
 
     const initGeocoder = async ({ maps }) => {
         const geocoder = new maps.Geocoder();
@@ -18,16 +20,26 @@ export const MapDisplay = () => {
       const [customerState, setCustomerState] = useState();
 
       const loadCustomer = async() => {
-        if (customer.customer){
-          let saved = await get(customer.customer.customerEmailAddress);
+        if (other.customer){
+          let u = null
+          try{
+            u = JSON.parse(other.customer)
+
+          }catch{
+            u = other.customer
+          }
+          let saved = await get(u.customerEmailAddress);
+
             if(saved === undefined){
-              const geo = await geoc.geocode({address: customer.customer.customerAddress})
+              const geo = await geoc.geocode({address: u.customerAddress})
               const lat = geo.results[0].geometry.location.lat()
               const lng = geo.results[0].geometry.location.lng()
               saved = {lat: lat, lng: lng}
-              await set(customer.customer.customerEmailAddress, saved)
+              await set(u.customerEmailAddress, saved)
             } 
-            setCustomerState({...customer.customer, location: saved})
+            localStorage.setItem("customer", JSON.stringify({...u, location: saved}));
+            setCustomerState({...u, location: saved})
+            customer.setCustomer({...u, location: saved})
         }else{
           setCustomerState(undefined)
         }
@@ -35,7 +47,8 @@ export const MapDisplay = () => {
 
       useEffect(() => {
         loadCustomer();
-      }, [customer]);
+
+      }, [other]);
 
       const getStores = async (geocoder) => {
         const request = await fetch(`https://sapstore.conuhacks.io/stores`, {
