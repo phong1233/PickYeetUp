@@ -76,8 +76,9 @@ const Overlay = (props) => {
         {
             hasOrder ? <Schedule deleteOrder={deleteOrder} />:
             <Card className='overlay'>
-                <img src={pickmeup} alt="Logo" width='150' height='150'/>
+                <img src={pickmeup} alt="Logo" width='250' height='250'/>
                 <Typography variant='body1'>Schedule your pickup order. Satisfaction guaranteed.</Typography>
+                <br/>
                 <TextField  
                     required
                     id="email-field"
