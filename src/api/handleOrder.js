@@ -23,8 +23,9 @@ const getAllSchedules = async (storeId, date) => {
 }
 
 const mapItoHours = (i) => {
-    const hours = Math.floor((i * 5) / 60);
+    const hours = Math.floor((i * 5) / 60) + 9;
     const minutes = (i % 12) * 5;
+    return {hours, minutes}
 }
 
 const mapHoursToI = (hours, minutes) => {
@@ -42,6 +43,22 @@ const available = (allEmployees, occupiedEmployees) => {
 
 function range(start, end) {
     return Array(end - start + 1).fill().map((_, idx) => start + idx)
+}
+
+export const getSchedule = async (stores, orderId) => {
+    console.log(orderId)
+    for(let i=0; i<14; i++){
+        const date = new Date(new Date().toISOString().split('T')[0])
+        for(let j=0; j<stores.length; j++){
+            const snapshot = await db.collection(`${date.getYear()}-${date.getMonth()}-${date.getDay()}`).doc(stores[j].storeId).collection(stores[j].storeId).doc(orderId).get();
+            console.log(snapshot)
+            const data = snapshot.data();
+            console.log(data)
+            if(data !== undefined)
+                return {date:`${date.getYear()}-${date.getMonth()}-${date.getDay()}`, start: mapItoHours(data.client.start), end: mapItoHours(data.client.end), storeId: stores[j], parking: data.parking}
+        }
+    }
+    return undefined
 }
 
 export const getDisponibilities = async (storeId, date, storeStart, storeEnd, employees, parkings, parcelSize) => {
@@ -101,6 +118,7 @@ export const getDisponibilities = async (storeId, date, storeStart, storeEnd, em
         }
         table.push(success ? "1": "0");
      }
+     console.log(table)
      return table;
 }
 

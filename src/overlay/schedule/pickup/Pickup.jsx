@@ -103,7 +103,7 @@ const Pickup = (props) => {
 
         for(let i = -1; i <= calendar.length; i++) {
             let realIdx = i + 1;
-            if((unavailable !== null && i == calendar.length) || (unavailable !== null && calendar[realIdx] === '1') ) {
+            if((unavailable !== null && i == calendar.length) || (unavailable !== null && calendar[realIdx] == '1') ) {
                 context.font = "10px Arial";
                 context.fillText("Not available", width-65, realIdx*scale - 5 )
 
@@ -112,7 +112,7 @@ const Pickup = (props) => {
                 unavailable = null;
                 context.fillStyle = '#000000'
             }
-            else if( unavailable === null && calendar[realIdx] === 0) {
+            else if( unavailable === null && calendar[realIdx] == '0') {
                 unavailable = realIdx
             }
 
@@ -192,6 +192,7 @@ const Pickup = (props) => {
         const start = currentPos;
         const end = (start + props.prepTime/5) + 2
         const s = stores.filter(s => s.storeId == sel)[0]
+        console.log(`${props.date.getYear()}-${props.date.getMonth()}-${props.date.getDay()}`)
         const send = saveSchedule(s.storeId, `${props.date.getYear()}-${props.date.getMonth()}-${props.date.getDay()}`, customer.customer.orderId, start, end, s.employees, s.pickupLocations, customer.customer.parcelSize)
         props.pickingFalse();
     }

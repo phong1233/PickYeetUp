@@ -5,15 +5,18 @@ import './Schedule.css';
 import { Button, TextField } from '@material-ui/core';
 import Pickup from './pickup/Pickup';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-
-
+import {getSchedule} from "../../api/handleOrder"
+import {useCustomer} from '../../contexts/CustomerContext'
 
 const Schedule = (props) => {
     const [ order, setOrder ] = useState();
     const [ pickingDate, setPickingDate ] = useState();
     const [ data, setDate ] = useState(new Date().toISOString().split('T')[0]);
     const [ dateError, setDateError ] = useState("");
-    const [ hasSchedule, setHasSchedule ] = useState(true);
+    const [ schedule, setSchedule ] = useState();
+    const [ hasSchedule, setHasSchedule ] = useState(false);
+
+    const customer = useCustomer();
 
     const handleDateChange = (e) => {
         let newDate = e.target.value.split("-")
@@ -47,10 +50,25 @@ const Schedule = (props) => {
         return null
     }
 
+    const findSchedule = async(orderId) => {
+        if(!customer.stores)
+        {return;}
+        const data = await getSchedule(customer.stores, orderId);
+        setSchedule(data)
+        console.log(data)
+        if(data!= undefined)
+            setHasSchedule(true)
+    }
+
     useEffect(() => {
         let storedOrder = localStorage.getItem("order");
-        setOrder(JSON.parse(storedOrder));
+        let o = JSON.parse(storedOrder)
+        setOrder(o);
     }, [])
+
+    useEffect(() => {
+        findSchedule(order?.orderId)
+    }, [customer, order])
 
     return (
         <>
@@ -131,7 +149,7 @@ const Schedule = (props) => {
                                 </Grid>
                             </Card>
                             <Typography variant="h6" style={{paddingTop: "25px"}}>
-                                {hasSchedule ? `Your current schedule is ${new Date().toString()}. Would you like to reschedule?` : "Choose the date at which you would like to pickup your order"}
+                                {hasSchedule ? `Your current schedule is from ${schedule.start.hours}:${schedule.start.minutes} to ${schedule.end.hours}:${schedule.end.minutes} at ${schedule.storeId.name}. Your parking is #${schedule.parking}. Would you like to reschedule?` : "Choose the date at which you would like to pickup your order"}
                             </Typography>
                             <br/>
                             <br/>
