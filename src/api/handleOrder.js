@@ -22,11 +22,21 @@ const getAllSchedules = async (storeId, date) => {
     return data
 }
 
-const mapItoHours = (i) => {
-    const hours = Math.floor((i * 5) / 60) + 9;
-    const minutes = (i % 12) * 5;
+const mapItoHours = (idx) => {
+    let minutes = idx * 5 + 55;
+    let hours = Math.floor(minutes/60);
+    minutes = minutes - hours * 60
+    let hoursStr = `${hours + 8}`
+    let minutesStr = minutes < 10 ? `0${minutes}` : `${minutes}`
+    hours = hours+8
     return {hours, minutes}
 }
+
+// const mapItoHours = (i) => {
+//     const hours = Math.floor((i * 5) / 60) + 9;
+//     const minutes = (i % 12) * 5;
+//     return {hours, minutes}
+// }
 
 const mapHoursToI = (hours, minutes) => {
     // knowing that 8:55 is 0
@@ -111,14 +121,11 @@ export const getDisponibilities = async (storeId, date, storeStart, storeEnd, em
             }
         }else{
             if(avParkings.length == 0 || avEmployees == 0){
-                console.log(occupied[i].employees)
-                console.log(occupied[i].parkings)
                 success = false;
             }
         }
         table.push(success ? "1": "0");
      }
-     console.log(table)
      return table;
 }
 

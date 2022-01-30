@@ -149,7 +149,7 @@ const Schedule = (props) => {
                                 </Grid>
                             </Card>
                             <Typography variant="h6" style={{paddingTop: "25px"}}>
-                                {hasSchedule ? `Your current schedule is from ${schedule.start.hours}:${schedule.start.minutes} to ${schedule.end.hours}:${schedule.end.minutes} at ${schedule.storeId.name}. Your parking is #${schedule.parking}. Would you like to reschedule?` : "Choose the date at which you would like to pickup your order"}
+                                {hasSchedule ? `Your current schedule is from ${schedule.start.hours}:${schedule.start.minutes < 10 ? `0${schedule.start.minutes}`: schedule.start.minutes} to ${schedule.end.hours}:${schedule.end.minutes < 10 ? `0${schedule.end.minutes}`: schedule.end.minutes} at ${schedule.storeId.name}. Your parking is #${schedule.parking}. Would you like to reschedule?` : "Choose the date at which you would like to pickup your order"}
                             </Typography>
                             <br/>
                             <br/>
