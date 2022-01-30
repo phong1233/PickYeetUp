@@ -5,6 +5,7 @@ import './Overlay.css';
 import { useCustomer } from '../contexts/CustomerContext';
 import pickmeup from '../logo/pickmeup.png';
 
+
 const Overlay = (props) => {
     const [ hasOrder, setHasOrder] = useState(false);
     const [ email, setEmail ] = useState("");
