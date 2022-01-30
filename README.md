@@ -1,98 +1,45 @@
-Getting Started with Create React App
+<br />
+<p align="center">
+  <a href="https://github.com/phong1233/PickYeetUp">
+    <img src="docs/logo.png" alt="Logo" width="200">
+  </a>
 
+  <h3 align="center">Pick Yeet Up</h3>
 
-## About The project
-**Project Name** is a BOPIP (Build Online, Pickup in Parking Lot) web app which is targeted towards an eCommerce company to help them safely manage customer orders during the COVID-19 pandemic
+  <p align="center">
+    Web application aimed to revolutionize the scheduling of pick-up orders! 🚗💨
+  </p>
+</p>
+<br />
 
-## Demo
-* Visit our website: [placeholder-domain.com]()
+![homepage](docs/homescreen.png)
+![summary](docs/summarypage.png)
+![time](docs/timepicker.png)
 
-### Built With
-* Frontend Framework [React](https://reactjs.org/tutorial/tutorial.html)
-* Geocoding [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview)
-* Library [Material UI](https://mui.com/)
+## Inspiration
+During this pandemic, we have seen many changes in our day-to-day lives. Moving towards an online world has made it hard to schedule activities. For example, we had to go through endless dropdowns simply to make a reservation to go to the gym. As such, we here at **Pick Yeet Up** are aiming to revolutionize the way we schedule by making the experience as intuitive as possible.
 
-### Getting Started
-## Installation
-1. Clone the repositery
-```
-https://github.com/phong1233/conuhacks2022.git
-```
-2. 
-```
-npm install
-```
-## Available Scripts
+## What it does
+Pick Yeet Up is a web app that allows customers to schedule the pick-up of their order. Using Google's API and the information of the customer, our application is able to smartly determine the best pick-up spot without having to enter any additional information! Beyond that, we have created our own time-picking interface that is both intuitive and informative.
 
-In the project directory, you can run:
+## How we built it
+Our solution is simplistic and makes maximum use of the API provided by **SAP**. The frontend is built using React with Node.js. For storage, we are using a combination of localStorage and Firebase.
 
-### `npm start`
+## Challenges we ran into
+Working with Google's Map API was new to us and we spent countless hours debugging before landing with a nice UI/UX. We've also faced difficulty finding a suitable solution to the scheduling problem. It is a hard task in terms of logistics. However, with diligent brainstorming and multiple mocks, we finally landed a solution that we are satisfied with.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Accomplishments that we're proud of
+Our team is proud to deliver a project that we would happily see on the market!
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## What we learned
+We learned a lot about the complexity of scheduling systems such as the features involved. We also learned a lot about Google's Map API through many trials and errors. Finally, while making this application we learned the true power of friendship.
 
-### `npm test`
+## What's next for Pick Yeet Up
+Many features are on the way. Such as a mobile version of the app, better pick-up time suggestions to optimize the time of employees, automatic scheduling based on historical data and so much more.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## More Information
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-## Contributors 
-
-| Name  | Github |
-| ------------- | ------------- |
-| Sébastien Blain-Nadeau  | [sebastien-blain](https://github.com/sebastien-blain)  |
-| Phong Le  | [phong1233](https://github.com/phong1233)  |
-| Kevin Jiang | [kevjiang64](https://github.com/kevjiang64) |
+## Contributors
+| Name                   | Github                                                |
+|------------------------|-------------------------------------------------------|
+| Phong Le               | [phong1233](https://github.com/phong1233)             |
+| Sébastien Blain-Nadeau | [sebastien-blain](https://github.com/sebastien-blain) |
+| Kevin Jiang            | [kevjiang64](https://github.com/kevjiang64) |
