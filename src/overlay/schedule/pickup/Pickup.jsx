@@ -40,7 +40,6 @@ const Pickup = (props) => {
         currentStores.map((c) => s.push({...c, distance: getDistanceFromLatLonInKm(c.location.lat, c.location.lng, user.location.lat, user.location.lng)}))
 
         s.sort((a, b) => a.distance <= b.distance ? -1: 1)
-        console.log(s)
 
         setStores(s)
         selectS(s[0].storeId, s[0])
@@ -104,7 +103,7 @@ const Pickup = (props) => {
 
         for(let i = -1; i <= calendar.length; i++) {
             let realIdx = i + 1;
-            if( unavailable !== null && calendar[realIdx] === 1 ) {
+            if((unavailable !== null && i == calendar.length) || (unavailable !== null && calendar[realIdx] === '1') ) {
                 context.font = "10px Arial";
                 context.fillText("Not available", width-65, realIdx*scale - 5 )
 
@@ -172,15 +171,21 @@ const Pickup = (props) => {
         return {hour, minute}
 
     }
-    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    const selectS = (val, store) => {
+    const days = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    const selectS = async (val, store) => {
         setSel(val);
         const opening = JSON.parse(store.openingHours)
-        const day = opening[(props.date.getDay() + 6) % 7]
-        const start = day[days[(props.date.getDay() + 6) % 7]]["Start"]
-        const end = day[days[(props.date.getDay() + 6) % 7]]["Finish"]
-        const di = getDisponibilities(store.storeId, `${props.date.getYear()}-${props.date.getMonth()}-${props.date.getDay()}`, valFromString(start), valFromString(end), store.employees, store.pickupLocations, customer.customer.parcelSize)
-        setDispo(di)
+        const choseDayInStr = days[(props.date.getDay())]
+        let currentOpening = opening.filter(k => {
+            for ( const [key, value] of Object.entries(k) ) {
+                if(key === choseDayInStr) return true;
+            }
+            return false;
+        })[0]
+        const start = currentOpening[choseDayInStr]["Start"]
+        const end = currentOpening[choseDayInStr]["Finish"]
+        const di = await getDisponibilities(store.storeId, `${props.date.getYear()}-${props.date.getMonth()}-${props.date.getDay()}`, valFromString(start), valFromString(end), store.employees, store.pickupLocations, customer.customer.parcelSize)
+        setDispo(di);
     }
 
     const confirmTime = () => {
@@ -188,6 +193,7 @@ const Pickup = (props) => {
         const end = (start + props.prepTime/5) + 2
         const s = stores.filter(s => s.storeId == sel)[0]
         const send = saveSchedule(s.storeId, `${props.date.getYear()}-${props.date.getMonth()}-${props.date.getDay()}`, customer.customer.orderId, start, end, s.employees, s.pickupLocations, customer.customer.parcelSize)
+        props.pickingFalse();
     }
 
     return (
@@ -200,7 +206,7 @@ const Pickup = (props) => {
                     inputProps={{ 'aria-label': 'Without label' }}
                     variant="outlined"
                     value={sel}
-                    onChange={(e)=> selectS(e.target.value)}
+                    onChange={(e)=> selectS(e.target.value, stores.filter(s => s.storeId === e.target.value)[0])}
                 >{
                     stores.length !== 0 && (stores.map(s => {
 return(<MenuItem key={s.storeId} value={s.storeId}>{`${s.name} --- ${s.distance.toFixed(2)}km`}</MenuItem>)

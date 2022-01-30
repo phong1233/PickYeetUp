@@ -101,7 +101,7 @@ export const getDisponibilities = async (storeId, date, storeStart, storeEnd, em
         }
         table.push(success ? "1": "0");
      }
-     console.log(table)
+     return table;
 }
 
 export const saveSchedule = async (storeId, date, orderId, start, end, employees, parkings, parcelSize) => {
