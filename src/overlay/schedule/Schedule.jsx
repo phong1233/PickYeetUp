@@ -13,6 +13,7 @@ const Schedule = (props) => {
     const [ pickingDate, setPickingDate ] = useState();
     const [ data, setDate ] = useState(new Date().toISOString().split('T')[0]);
     const [ dateError, setDateError ] = useState("");
+    const [ hasSchedule, setHasSchedule ] = useState(true);
 
     const handleDateChange = (e) => {
         let newDate = e.target.value.split("-")
@@ -44,11 +45,6 @@ const Schedule = (props) => {
         };
 
         return null
-    }
-
-    const selectDate = () => {
-        setPickingDate(true);
-
     }
 
     useEffect(() => {
@@ -135,7 +131,7 @@ const Schedule = (props) => {
                                 </Grid>
                             </Card>
                             <Typography variant="h6" style={{paddingTop: "25px"}}>
-                            Choose the date at which you would like to pickup your order
+                                {hasSchedule ? `Your current schedule is ${new Date().toString()}. Would you like to reschedule?` : "Choose the date at which you would like to pickup your order"}
                             </Typography>
                             <br/>
                             <br/>
